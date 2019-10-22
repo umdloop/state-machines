@@ -1,0 +1,23 @@
+main.cpp:63:5:int __io_putchar(int)	24	static
+main.cpp:84:15:virtual void Switch::react(const TimerPulse&)	16	static
+main.cpp:92:7:void Switch::exit()	16	static
+main.cpp:101:7:virtual void Blink::entry()	16	static
+main.cpp:105:7:virtual void Blink::react(const Toggle&)	16	static
+main.cpp:109:7:virtual void Blink::react(const TimerPulse&)	16	static
+main.cpp:115:7:virtual void On::entry()	16	static
+main.cpp:117:7:virtual void On::react(const Toggle&)	16	static
+main.cpp:121:7:virtual void Off::entry()	16	static
+main.cpp:123:7:virtual void Off::react(const Toggle&)	16	static
+main.cpp:126:1:static void tinyfsm::Fsm<F>::set_initial_state() [with F = Switch]	4	static
+main.cpp:132:6:void HAL_GPIO_EXTI_Callback(uint16_t)	16	static
+main.cpp:138:6:void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef*)	24	static
+main.cpp:148:5:int main()	8	static
+main.cpp:190:6:void SystemClock_Config()	232	static
+main.cpp:242:6:void Error_Handler()	4	static
+tinyfsm.hpp:134:10:void tinyfsm::Fsm<F>::transit() [with S = Off; F = Switch]	16	static
+tinyfsm.hpp:134:10:void tinyfsm::Fsm<F>::transit() [with S = Blink; F = Switch]	16	static
+tinyfsm.hpp:134:10:void tinyfsm::Fsm<F>::transit() [with S = On; F = Switch]	16	static
+tinyfsm.hpp:125:17:static void tinyfsm::Fsm<F>::dispatch(const E&) [with E = Toggle; F = Switch]	16	static
+tinyfsm.hpp:125:17:static void tinyfsm::Fsm<F>::dispatch(const E&) [with E = TimerPulse; F = Switch]	16	static
+tinyfsm.hpp:119:17:static void tinyfsm::Fsm<F>::start() [with F = Switch]	8	static
+tinyfsm.hpp:115:17:static void tinyfsm::Fsm<F>::enter() [with F = Switch]	8	static
