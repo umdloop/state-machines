@@ -1,0 +1,17 @@
+digraph Precharge1 {
+    IDLE   [label="IDLE"];
+    OPEN1  [label="OPEN K1, K2, K3, K4"];
+    CLOSE1 [label="CLOSE K4"];
+    OPEN2  [label="OPEN K4"];
+    CLOSE2 [label="CLOSE K3, K2"];
+    CLOSE3 [label="CLOSE K1"];
+    OPEN3  [label="OPEN K2"];
+
+    IDLE   -> OPEN1    [label="Precharge"];
+    OPEN1  -> CLOSE1   [label="50 ms"];
+    CLOSE1 -> OPEN2    [label="15 sec"];
+    OPEN2  -> CLOSE2   [label="50 ms"];
+    CLOSE2 -> CLOSE3   [label="1 sec"];
+    CLOSE3 -> OPEN3    [label="50 ms"];
+    OPEN3  -> IDLE     [label="Unconditional"]
+}
