@@ -55,7 +55,7 @@ int toggle = 0;
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
-
+uint8_t buffer[1];
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -72,7 +72,6 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
 	timeBit = 1;
-	HAL_TIM_Base_Stop_IT(&htim2);
 }
 
 
@@ -119,7 +118,12 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-  (void*)fsm_handle::current_state_ptr;
+	  (void*)fsm_handle::current_state_ptr;
+  	  HAL_UART_Receive(&huart2, buffer, 1, 50);
+  	  if(buffer[0] == 'd') {
+  		  buffer[0] = 0;
+  		  fsm_handle::dispatch(Discharge());
+  	  }
     /* USER CODE BEGIN 3 */
 	  if(startBit) {
 		  fsm_handle::dispatch(StartPrecharge());

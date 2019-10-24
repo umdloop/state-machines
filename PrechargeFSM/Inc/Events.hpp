@@ -14,6 +14,7 @@ struct PrechargeEvent : tinyfsm::Event {};
 
 struct StartPrecharge : PrechargeEvent {};
 struct TimerPulse : PrechargeEvent {};
+struct Discharge : PrechargeEvent {};
 struct Fault : PrechargeEvent {};
 
 

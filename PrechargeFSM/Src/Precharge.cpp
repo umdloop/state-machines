@@ -12,11 +12,58 @@
 // We need to forward declare idle since it's our loopback point
 class Idle;
 
+class OpenK42 : public Precharge {
+	void entry() {
+		HAL_GPIO_WritePin(K4_GPIO_Port, K4_Pin, GPIO_PIN_RESET);
+		print("Open K4\n");
+		print("Discharged!\n");
+		startTimer(50);
+	}
+
+	void react(TimerPulse const&) override {
+		HAL_TIM_Base_Stop_IT(&htim2);
+		transit<Idle>();
+	}
+};
+
+class CloseK42 : public Precharge {
+	void entry() {
+		HAL_GPIO_WritePin(K4_GPIO_Port, K4_Pin, GPIO_PIN_SET);
+		print("Close K4 \n");
+		startTimer(15*1000);
+	}
+
+	void react(TimerPulse const&) override {
+		HAL_TIM_Base_Stop_IT(&htim2);
+		transit<OpenK42>();
+	}
+};
+
+class OpenAll2 : public Precharge {
+	void entry() {
+			HAL_GPIO_WritePin(K1_GPIO_Port, K1_Pin, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(K2_GPIO_Port, K2_Pin, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(K3_GPIO_Port, K3_Pin, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(K4_GPIO_Port, K4_Pin, GPIO_PIN_RESET);
+			print("Discharging!\n");
+			startTimer(50);
+		}
+
+		void react(TimerPulse const&) override {
+			HAL_TIM_Base_Stop_IT(&htim2);
+			transit<CloseK42>();
+		}
+};
+
 class OpenK2 : public Precharge {
 	void entry() {
 		HAL_GPIO_WritePin(K2_GPIO_Port, K2_Pin, GPIO_PIN_RESET);
 		print("Open K2\n");
-		transit<Idle>();
+		print("Precharged!\n");
+	}
+
+	void react(Discharge const&) {
+		transit<OpenAll2>();
 	}
 };
 
@@ -75,6 +122,7 @@ class CloseK4 : public Precharge {
 
 class OpenAll : public Precharge {
 	void entry() {
+		print("Start Precharging!\n");
 		HAL_GPIO_WritePin(K1_GPIO_Port, K1_Pin, GPIO_PIN_RESET);
 		HAL_GPIO_WritePin(K2_GPIO_Port, K2_Pin, GPIO_PIN_RESET);
 		HAL_GPIO_WritePin(K3_GPIO_Port, K3_Pin, GPIO_PIN_RESET);
@@ -94,8 +142,10 @@ class Idle : public Precharge {
 		print("Idle\n");
 	}
 	void react(StartPrecharge const&) override {
-		print("Precharging!\n");
 		transit<OpenAll>();
+	}
+	void react(Discharge const&) {
+			transit<OpenAll2>();
 	}
 };
 

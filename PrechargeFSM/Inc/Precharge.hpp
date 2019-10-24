@@ -16,6 +16,7 @@
 #include "usart.h"
 #include "print.h"
 
+class Fault;
 
 class Precharge : public tinyfsm::Fsm<Precharge> {
 public:
@@ -24,6 +25,7 @@ public:
 	virtual void react(TimerPulse const&) {};
 	virtual void react(Fault const&) {};
 	virtual void react(StartPrecharge const&) {};
+	virtual void react(Discharge const&) {};
 
 	virtual void entry(void) {};
 	void exit(void) {};
