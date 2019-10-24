@@ -1,0 +1,2 @@
+print.c:12:5:__io_putchar	24	static
+print.c:19:6:print	16	static
