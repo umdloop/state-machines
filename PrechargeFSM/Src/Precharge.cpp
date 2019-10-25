@@ -12,6 +12,12 @@
 // We need to forward declare idle since it's our loopback point
 class Idle;
 
+class FaultState : public Precharge{
+	void entry() {
+		print("ESTOP\n");
+	}
+};
+
 class OpenK42 : public Precharge {
 	void entry() {
 		HAL_GPIO_WritePin(K4_GPIO_Port, K4_Pin, GPIO_PIN_RESET);
@@ -148,5 +154,9 @@ class Idle : public Precharge {
 			transit<OpenAll2>();
 	}
 };
+
+void Precharge::react(const Fault&) {
+	transit<FaultState>();
+}
 
 FSM_INITIAL_STATE(Precharge, Idle);

@@ -1,30 +1,31 @@
-Precharge.hpp:25:15:virtual void Precharge::react(const TimerPulse&)	16	static
-Precharge.hpp:26:15:virtual void Precharge::react(const Fault&)	16	static
-Precharge.hpp:27:15:virtual void Precharge::react(const StartPrecharge&)	16	static
-Precharge.hpp:28:15:virtual void Precharge::react(const Discharge&)	16	static
-Precharge.hpp:31:7:void Precharge::exit()	16	static
-Precharge.cpp:16:7:virtual void OpenK42::entry()	16	static
-Precharge.cpp:23:7:virtual void OpenK42::react(const TimerPulse&)	16	static
-Precharge.cpp:30:7:virtual void CloseK42::entry()	16	static
-Precharge.cpp:36:7:virtual void CloseK42::react(const TimerPulse&)	16	static
-Precharge.cpp:43:7:virtual void OpenAll2::entry()	16	static
-Precharge.cpp:52:8:virtual void OpenAll2::react(const TimerPulse&)	16	static
-Precharge.cpp:59:7:virtual void OpenK2::entry()	16	static
-Precharge.cpp:65:7:virtual void OpenK2::react(const Discharge&)	16	static
-Precharge.cpp:71:7:virtual void CloseK1::entry()	16	static
-Precharge.cpp:77:7:virtual void CloseK1::react(const TimerPulse&)	16	static
-Precharge.cpp:84:7:virtual void CloseK3K2::entry()	16	static
-Precharge.cpp:91:7:virtual void CloseK3K2::react(const TimerPulse&)	16	static
-Precharge.cpp:98:7:virtual void OpenK4::entry()	16	static
-Precharge.cpp:104:7:virtual void OpenK4::react(const TimerPulse&)	16	static
-Precharge.cpp:111:7:virtual void CloseK4::entry()	16	static
-Precharge.cpp:117:7:virtual void CloseK4::react(const TimerPulse&)	16	static
-Precharge.cpp:124:7:virtual void OpenAll::entry()	16	static
-Precharge.cpp:134:7:virtual void OpenAll::react(const TimerPulse&)	16	static
-Precharge.cpp:141:7:virtual void Idle::entry()	16	static
-Precharge.cpp:144:7:virtual void Idle::react(const StartPrecharge&)	16	static
-Precharge.cpp:147:7:virtual void Idle::react(const Discharge&)	16	static
-Precharge.cpp:152:1:static void tinyfsm::Fsm<F>::set_initial_state() [with F = Precharge]	4	static
+Precharge.hpp:23:15:virtual void Precharge::react(const TimerPulse&)	16	static
+Precharge.hpp:25:15:virtual void Precharge::react(const StartPrecharge&)	16	static
+Precharge.hpp:26:15:virtual void Precharge::react(const Discharge&)	16	static
+Precharge.hpp:29:7:void Precharge::exit()	16	static
+Precharge.cpp:16:7:virtual void FaultState::entry()	16	static
+Precharge.cpp:22:7:virtual void OpenK42::entry()	16	static
+Precharge.cpp:29:7:virtual void OpenK42::react(const TimerPulse&)	16	static
+Precharge.cpp:36:7:virtual void CloseK42::entry()	16	static
+Precharge.cpp:42:7:virtual void CloseK42::react(const TimerPulse&)	16	static
+Precharge.cpp:49:7:virtual void OpenAll2::entry()	16	static
+Precharge.cpp:58:8:virtual void OpenAll2::react(const TimerPulse&)	16	static
+Precharge.cpp:65:7:virtual void OpenK2::entry()	16	static
+Precharge.cpp:71:7:virtual void OpenK2::react(const Discharge&)	16	static
+Precharge.cpp:77:7:virtual void CloseK1::entry()	16	static
+Precharge.cpp:83:7:virtual void CloseK1::react(const TimerPulse&)	16	static
+Precharge.cpp:90:7:virtual void CloseK3K2::entry()	16	static
+Precharge.cpp:97:7:virtual void CloseK3K2::react(const TimerPulse&)	16	static
+Precharge.cpp:104:7:virtual void OpenK4::entry()	16	static
+Precharge.cpp:110:7:virtual void OpenK4::react(const TimerPulse&)	16	static
+Precharge.cpp:117:7:virtual void CloseK4::entry()	16	static
+Precharge.cpp:123:7:virtual void CloseK4::react(const TimerPulse&)	16	static
+Precharge.cpp:130:7:virtual void OpenAll::entry()	16	static
+Precharge.cpp:140:7:virtual void OpenAll::react(const TimerPulse&)	16	static
+Precharge.cpp:147:7:virtual void Idle::entry()	16	static
+Precharge.cpp:150:7:virtual void Idle::react(const StartPrecharge&)	16	static
+Precharge.cpp:153:7:virtual void Idle::react(const Discharge&)	16	static
+Precharge.cpp:158:6:virtual void Precharge::react(const Fault&)	16	static
+Precharge.cpp:162:1:static void tinyfsm::Fsm<F>::set_initial_state() [with F = Precharge]	4	static
 tinyfsm.hpp:134:10:void tinyfsm::Fsm<F>::transit() [with S = Idle; F = Precharge]	16	static
 tinyfsm.hpp:134:10:void tinyfsm::Fsm<F>::transit() [with S = OpenK42; F = Precharge]	16	static
 tinyfsm.hpp:134:10:void tinyfsm::Fsm<F>::transit() [with S = CloseK42; F = Precharge]	16	static
@@ -35,3 +36,4 @@ tinyfsm.hpp:134:10:void tinyfsm::Fsm<F>::transit() [with S = CloseK3K2; F = Prec
 tinyfsm.hpp:134:10:void tinyfsm::Fsm<F>::transit() [with S = OpenK4; F = Precharge]	16	static
 tinyfsm.hpp:134:10:void tinyfsm::Fsm<F>::transit() [with S = CloseK4; F = Precharge]	16	static
 tinyfsm.hpp:134:10:void tinyfsm::Fsm<F>::transit() [with S = OpenAll; F = Precharge]	16	static
+tinyfsm.hpp:134:10:void tinyfsm::Fsm<F>::transit() [with S = FaultState; F = Precharge]	16	static

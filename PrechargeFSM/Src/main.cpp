@@ -124,6 +124,10 @@ int main(void)
   		  buffer[0] = 0;
   		  fsm_handle::dispatch(Discharge());
   	  }
+  	  if(buffer[0] == 'f') {
+  		  buffer[0] = 0;
+  		  fsm_handle::dispatch(Fault());
+  	  }
     /* USER CODE BEGIN 3 */
 	  if(startBit) {
 		  fsm_handle::dispatch(StartPrecharge());
