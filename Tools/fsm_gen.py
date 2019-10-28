@@ -28,7 +28,7 @@
 #  Ryan W.     10-26-19  Initial version.
 ###############################################################################
 
-import pygraphviz as pgv
+import networkx as nx
 import argparse
 import os
 
@@ -40,7 +40,7 @@ EVENTS_GUARD = 'EVENTS_HPP_'
 STATES_GUARD = 'STATES_HPP_'
 
 def process_graph(infile, outdir):
-    G = pgv.AGraph(infile)
+    G = nx.drawing.nx_agraph.read_dot(infile)
 
     events_header = os.path.join(outdir, 'Events.hpp')
     states_header = os.path.join(outdir, 'States.hpp')
@@ -48,13 +48,14 @@ def process_graph(infile, outdir):
 
     gen_events_header(G, events_header);
     gen_states_header(G, states_header);
-    print(G.nodes())
+    gen_states_source(G, states_source);
 
 def graph_events(G):
     events = set()
-    for e in G.edges():
-        label = e.attr.__getitem__('label')
-        events.add(label2event(label))
+    labels = nx.get_edge_attributes(G, 'label')
+    
+    for e in nx.edges(G):
+        events.add(label2event(labels[e + (0,)]))
     return events
 
 def label2event(label):
@@ -113,8 +114,8 @@ def gen_states_header(G, file):
         f.write(end_guard(STATES_GUARD) + '\n')
 
 def states_header_includes():
-    return ('include "Events.hpp"\n' 
-            'include "tinyfsm.hpp"\n')
+    return ('#include "Events.hpp"\n' 
+            '#include "tinyfsm.hpp"\n')
 
 def base_state_definition(events):
     base = ('class BASE_STATE : public tinyfsm::Fsm<BASE_STATE> {\n'
@@ -133,7 +134,39 @@ def base_react(event):
 #  States.cpp Generation
 ###############################################################################
 
-# TODO
+def gen_states_source(G, file):
+    with open(file, "w") as f:
+        f.write(header_comment() + '\n')
+        f.write(states_source_includes() + '\n')
+        f.write(forward_declarations(G) + '\n')
+        for s in G.nodes():
+            f.write(state_definition(G, s) + '\n')
+
+def states_source_includes():
+    return '#include States.hpp\n'
+
+def forward_declarations(G):
+    code = ''
+    labels = nx.get_node_attributes(G, 'label')
+    
+    for s in G.nodes():
+        code += f'class {s};    /* {labels[s]} */\n'
+    return code
+
+def state_definition(G, s):
+    labels = nx.get_edge_attributes(G, 'label')
+    
+    code = (f'class {s} : BASE_STATE {{\n'
+             '    void entry() {\n'
+             '        // TODO\n'
+             '    }\n\n')
+    
+    for e in nx.edges(G, s):
+        code += (f'    void react({label2event(labels[e + (0,)])} const &) override {{\n'
+                 f'        transit<{e[1]}>();\n'
+                  '    }\n\n')
+    
+    return code + '}\n'
 
 ###############################################################################
 #  Main
