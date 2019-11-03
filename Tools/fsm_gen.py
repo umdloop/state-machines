@@ -21,6 +21,10 @@
 #    -s, --stubs  forces stub generation even when this tool would otherwise
 #                 perform code generation.
 ###############################################################################
+#  Dependencies
+#     * python3
+#     * libgraphviz-dev
+###############################################################################
 #  Change History:
 #
 #    Author      Date      Description of Change
