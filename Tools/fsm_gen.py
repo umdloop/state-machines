@@ -26,6 +26,7 @@
 #    Author      Date      Description of Change
 #  ----------  --------  --------------------------------------------------
 #  Ryan W.     10-26-19  Initial version.
+#  Minya R.    11-04-19  Minor Source Generation Bugfix
 ###############################################################################
 
 import networkx as nx
@@ -143,7 +144,7 @@ def gen_states_source(G, file):
             f.write(state_definition(G, s) + '\n')
 
 def states_source_includes():
-    return '#include States.hpp\n'
+    return '#include "States.hpp"\n'
 
 def forward_declarations(G):
     code = ''
@@ -166,7 +167,7 @@ def state_definition(G, s):
                  f'        transit<{e[1]}>();\n'
                   '    }\n\n')
     
-    return code + '}\n'
+    return code + '};\n'
 
 ###############################################################################
 #  Main
