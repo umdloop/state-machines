@@ -1,0 +1,6 @@
+digraph newUSM {
+    S51 [label = "Control Bus Tx:\nTransmit Master Keep Alive"];
+    S51 -> S51 [label = "1(T1)"];
+}
+
+// include state where estop occurs (another flag)

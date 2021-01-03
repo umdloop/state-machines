@@ -1,0 +1,34 @@
+digraph newUSM {
+    // Receive TelemetryKeepAlive
+    S50 [label = "(ENTRY)Pre-Sync"];
+    S51 [label = "Control Bus Rx:\nHigh Voltage Keep Alive"];
+    S52 [label = "Control Bus Tx:\nE-STOP (Reason: 0x00)"];
+
+    S50 -> S51 [label = "High Voltage Alive"];
+    S51 -> S51 [label = "High Voltage Alive"];
+    S51 -> S52 [label = "5(T2)"];
+
+
+    // Receive ExcavationKeepAlive
+    S60 [label = "(ENTRY)Pre-Sync"];
+    S61 [label = "Control Bus Rx:\nPipe Jacking Keep Alive"];
+    S62 [label = "Control Bus Tx:\nE-STOP (Reason: 0x01)"];
+
+    S60 -> S61 [label="Pipe Jacking Alive"];
+    S61 -> S61 [label="Pipe Jacking Alive"];
+    S61 -> S62 [label="5(T3)"];
+
+
+    // Receive EKeepAlive
+    S80 [label = "(ENTRY)Pre-Sync"];
+    S81 [label = "Control Bus Rx:\nPower and Safety Keep Alive"];
+    S82 [label = "Control Bus Tx:\nE-STOP (Reason: 0x03)"];
+
+    S80 -> S81 [label = "Power and Safety Alive"];
+    S81 -> S81 [label = "Power and Safety Alive"];
+    S81 -> S82 [label = "5(T4)"];
+
+}
+
+// include state where estop occurs (another flag)
+
