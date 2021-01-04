@@ -1,0 +1,17 @@
+digraph {
+	S00 [label="(ENTRY) IDLE"];
+    S01 [label="Power up routine"];
+    S02 [label="Pressurizing, Motor on, Oil cooler on"];
+S03 [label="Pressurized, Motor on, Oil cooler on"];
+	S04 [label="Idle, Motor off, Oil cooler off"];
+	S05 [label="ESTOP"];
+
+	S00 -> S01 [label="Load TBM"];
+	S01 -> S04 [label="Power up complete"];
+    S03 -> S05 [label="ESTOP, MC Message Invalid"];
+   S02 -> S05 [label="ESTOP, MC Message Invalid"];
+	S03 -> S04 [label="Depressurize"];
+	S02 -> S03 [label="Fully pressurized"];
+S04 -> S02 [label="Start pressurizing"];
+
+}
