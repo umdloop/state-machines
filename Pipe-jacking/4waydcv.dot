@@ -1,0 +1,28 @@
+digraph {
+    // 12/4 4 way
+    S01 [label="(ENTRY)Power up routine"];
+    S02 [label="Sync"];
+    S03 [label="Idle(DCV hold)"]; 
+    S04 [label="DCV retract"];
+    S05 [label="DCV extend"];
+// not sure should it be depressurized or not 
+    S06 [label="Estop"];
+
+    S01 -> S02 [label="Synchronize"];
+    S02 -> S03 [label="Master Alive"];
+// open all valves, start retract
+    S03 -> S04 [label="Host PC: retract"];
+// retracting 
+    S04 -> S04 [label="T1" ]
+//  fully retract
+    S04 -> S03 [label="Fully retracted"]
+//  extend start
+    S03 -> S05 [label="Host PC: extend"];
+// extending 
+    S05 -> S05 [label="T2" ]
+// fully extend 
+    S05 -> S03 [label="Fully extended"]
+// no response between valves and mc 
+    S04 -> S06 [label="No response and time out"]   
+    S05 -> S06 [label="No response and time out"]  
+}

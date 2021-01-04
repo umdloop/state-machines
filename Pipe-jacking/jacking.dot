@@ -1,0 +1,27 @@
+digraph {
+    // 12/15
+    S01 [label= "(ENTRY)Power up routine"];
+    S02 [label= "Sync"];
+    S03 [label="Open drain valves, DCV retract"];
+    S04 [label="Close drain valves, DCV fully retracted"];
+    S05 [label=" Actuators extend and retract routine"];
+    S06 [label="Open drain valves"];
+    S07 [label="Check up"];
+    S08 [label= "Check up"];
+    S09 [label= "Estop"];
+    S10 [label= "Idle"];
+    
+    S01 -> S02 [label=""];
+    S02 -> S10 [label=""];
+    S10 -> S08 [label=""]
+    S08 -> S03 [label= "Check success"];
+    S03 -> S04 [label="Host PC: Pressurize"];
+    S04 -> S05 [label="Host PC: start jacking"];
+// extending 
+    S05 -> S06 [label="Host PC: Depressurize"];
+    S06 -> S07 [label="System depressurized"];
+    S07 -> S05 [label="Check success, Host PC: jacking"];
+    S07 -> S09 [label="Check fails"];
+    S08 -> S09 [label="Check fails"];
+}
+
