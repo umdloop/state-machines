@@ -1,0 +1,8 @@
+digraph {
+    // 12/4
+    S01 [label="(ENTRY)Power up routine"];
+    S02 [label="Send KeepAlive"];
+
+    S01 -> S02 [label="Synchronize"];
+    S02 -> S02 [label="T1"]
+}

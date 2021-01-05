@@ -1,0 +1,71 @@
+digraph SensorMgt{
+   // Keep Alive Transmission FSM
+   S01 [label="(ENTRY)Pre-Sync"];
+   S00 [label="Control Bus Tx:\nSensor Keep Alive"];
+
+   S01 -> S00 [label="Synchronized"];
+   S00 -> S00 [label="1(T1)"];
+
+
+   // Keep Alive Reception FSM
+   S10 [label="(ENTRY)Synchronize"];
+   S11 [label="Dispatch: Synchronized"];
+   S12 [label="Control Bus Rx:\nMaster Keep Alive"];
+   S13 [label="Control Bus Tx:\nE-STOP (Reason: 0x00)"];
+
+   S10 -> S11 [label="Master Alive"];
+   S11 -> S12 [label=" "];
+   S12 -> S12 [label="Master Alive"];
+   S12 -> S13 [label="5(T2)"];
+
+
+   // Navigation IMU Readings FSM
+   S20 [label="(ENTRY)Pre-Sync"];
+   S21 [label="Data Bus Tx:\nIMU Readings"];
+   S22 [label="Control Bus Tx:\nE-STOP (Reason: 0x01)"];
+
+   S20 -> S21 [label="Synchronized"];
+   S21 -> S21 [label=" X(T3)"];
+   S21 -> S22 [label="No Reading"];
+
+
+   // Navigation Compass Readings FSM
+   S30 [label="(ENTRY)Pre-Sync"];
+   S31 [label="Data Bus Tx:\nCompass Readings"];
+   S32 [label="Control Bus Tx:\nE-STOP (Reason: 0x02)"];
+
+   S30 -> S31 [label="Synchronized"];
+   S31 -> S31 [label=" X(T3)"];
+   S31 -> S32 [label="No Reading"];
+
+
+   // Navigation Laser Readings FSM
+   S40 [label="(ENTRY)Pre-Sync"];
+   S41 [label="Data Bus Tx:\nLaser Readings"];
+   S42 [label="Control Bus Tx:\nE-STOP (Reason: 0x03)"];
+
+   S40 -> S41 [label="Synchronized"];
+   S41 -> S41 [label=" X(T3)"];
+   S41 -> S42 [label="No Reading"];
+
+
+   // Gas Detection FSM
+   S50 [label="(ENTRY)Pre-Sync"];
+   S51 [label="Data Bus Tx:\nGas Detection Readings"];
+   S52 [label="Control Bus Tx:\nE-STOP (Reason: 0x04)"];
+
+   S50 -> S51 [label="Synchronized"];
+   S51 -> S51 [label="100(T4)"];
+   S51 -> S52 [label="Gas Out of Bounds"];
+
+
+   // Temperature Readings FSM
+   S60 [label="(ENTRY)Pre-Sync"];
+   S61 [label="Data Bus Tx:\nAmbient Temperature Readings"];
+   S62 [label="Control Bus Tx:\nE-STOP (Reason: 0x05)"];
+
+   S60 -> S61 [label="Synchronized"];
+   S61 -> S61 [label="100(T4)"];
+   S61 -> S62 [label="Temp Out of Bounds"];
+
+}
