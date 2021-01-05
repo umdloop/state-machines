@@ -1,9 +1,12 @@
 digraph {
-	S00 [label="(ENTRY) IDLE"];
-    S01 [label="Data Bus Tx:\nTemperature Readings\n(ID: 0x902)"];
-    S02 [label="E-STOP"];
+S41		[label="(ENTRY)Pre-Sync"];
+S42		[label="Idle"];
+S43		[label="Process Data"];
+S44		[label="Control Bus Tx:\nE-STOP (Reason: 0x)\n(ID: 0x077)"];
 
-	S00 -> S01 [label="Synchronized"];
-    S01 -> S01 [label="Delay 100ms"];
-    S01 -> S02 [label="Temperature out of bounds"];
+S41 -> S42     [label="Synchronized"];
+S42 -> S43     [label="Data Bus Rx: x\nTemperature Readings\n(ID: 0x902)\n"];
+S43 -> S44     [label="Out of Bounds"];
+
+S43 -> S42     [label="100 ms"];
 }
