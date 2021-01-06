@@ -5,8 +5,8 @@ S43		[label="Process Data"];
 S44		[label="Control Bus Tx:\nE-STOP (Reason: 0x)\n(ID: 0x077)"];
 
 S41 -> S42     [label="Synchronized"];
-S42 -> S43     [label="Data Bus Rx: x\nTemperature Readings\n(ID: 0x902)\n"];
+S42 -> S43     [label="Data Bus Rx:\nTemperature Readings\n(ID: 0x902)\n"];
 S43 -> S44     [label="Out of Bounds"];
 
-S43 -> S42     [label="100 ms"];
+S43 -> S42     [label="100(T4)"];
 }
