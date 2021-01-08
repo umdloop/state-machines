@@ -1,9 +1,0 @@
-digraph {
-    S00 [label="(ENTRY) IDLE"];
-        S01 [label="Check pressure and temperature, Send to Telemetry"];
-	    S02 [label="ESTOP"];
-
-    S00 -> S01 [label="KeepAlive"];
-        S01 -> S01 [label="Delay 10ms"];
-	    S01 -> S02 [label="Pressure/temperature over limit"];
-	    }

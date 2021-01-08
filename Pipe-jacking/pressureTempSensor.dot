@@ -1,9 +1,17 @@
 digraph {
-    S00 [label="(ENTRY) IDLE"];
-    S01 [label="Check pressure and temperature"];
-    S02 [label="ESTOP"];
+    S00 [label="(ENTRY)Pre-Sync"];
+    S01 [label="Data Bus Tx: 0x801\nPressure Readings"];
+    S02 [label="E-STOP(Reason:0x)"];
 
-    S00 -> S01 [label="KeepAlive"];
-    S01 -> S01 [label="Delay 10ms"];
-    S01 -> S02 [label="Pressure/temperature over limit"];
+    S00 -> S01 [label="Synchronized"];
+    S01 -> S01 [label="100(T5)"];
+    S01 -> S02 [label="Pressure over limit"];
+
+    S03 [label="(ENTRY)Pre-Sync"];
+    S04 [label="Data Bus Tx: 0x802\nTemperature Readings"];
+    S05 [label="E-STOP(Reason:0x)"];
+
+    S03 -> S04 [label="Synchronized"];
+    S04 -> S04 [label="100(T4)"];
+    S04 -> S05 [label="Temperature over limit"];
 }

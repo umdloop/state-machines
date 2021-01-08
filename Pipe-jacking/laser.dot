@@ -1,0 +1,9 @@
+digraph{
+   S30 [label="(ENTRY)Pre-Sync"];
+   S31 [label="Data Bus Tx:\nLaser Distance Sensor Readings (ID: 0x904)"];
+   S32 [label="Control Bus Tx:\nE-STOP (Reason: 0x) (ID: 0x077)"];
+
+   S30 -> S31 [label="Synchronized"];
+   S31 -> S31 [label=" 100(T6)"];
+   S31 -> S32 [label="No Reading"];
+}

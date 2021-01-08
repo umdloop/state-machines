@@ -1,0 +1,19 @@
+digraph presynchronizeToEstop {
+
+S01 [label="(ENTRY)Pre-Sync"];
+S00 [label="Control Bus Tx:\nE-STOP (Reason: 0x)"];
+
+S01 -> S00 [label="Synchronized"];
+S00 -> S00 [label="1(T1)"];
+
+S10 [label="(ENTRY)Pre-Sync"];
+S11 [label="Dispatch: Synchronized"];
+S12 [label="Control Bus Rx: x\nMaster Keep Alive"];
+S13 [label="Control Bus Tx:\nE-STOP (Reason: 0x)"];
+
+S10 -> S11 [label="Master Alive"];
+S11 -> S12 [label=" "];
+S12 -> S12 [label="Master Alive"];
+S12 -> S13 [label="5(T2)"];
+
+}
