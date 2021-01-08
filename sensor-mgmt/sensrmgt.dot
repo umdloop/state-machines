@@ -70,4 +70,13 @@ digraph SensorMgt{
    S70 -> S71 [label="Synchronized"];
    S71 -> S71 [label=" 100(T4)"];
 
+
+   // Drop Bolt FSM
+   S80 [label="(ENTRY)Pre-Sync"];
+   S81 [label="Idle"];
+   S82 [label="Control Bus Tx:\nE-STOP (Reason: 0x03) (ID: 0x077)"];
+
+   S80 -> S81 [label="Synchronized"];
+   S81 -> S82 [label="Access Panel Opened"];
+
 }
