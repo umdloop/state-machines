@@ -8,5 +8,5 @@ S41 -> S42     [label="Synchronized"];
 S42 -> S43     [label="Data Bus Rx: \nPressure Readings\n(ID: 0x901)\n"];
 S43 -> S44     [label="Out of Bounds"];
 
-S43 -> S42     [label="10(T3)"];
+S43 -> S42     [label="100(T3)"];
 }
