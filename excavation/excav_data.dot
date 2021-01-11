@@ -1,0 +1,63 @@
+digraph Excavation{
+    // Keep Alive Transmission FSM
+    S00 [label="(ENTRY)Pre-Sync"];
+    S01 [label="Control Bus Tx:\nBC Keep Alive"];
+
+    S00 -> S01 [label="Synchronized"];
+    S01 -> S01 [label= " "];
+
+    // Keep Alive Reception FSM
+    S10 [label="(ENTRY)Synchronize"];
+    S11 [label="Dispatch: Synchronized"];
+    S12 [label="Control Bus Rx:\nMaster Keep Alive"];
+    S13 [label="Control Bus Tx:\nE-STOP\n (ID: 0x077)"];
+    S14 [label="Turn off Cutterhead"];
+
+    S10 -> S11 [label="Master Alive"];
+    S11 -> S12 [label=" "];
+    S12 -> S12 [label="Master Alive"];
+    S12 -> S13 [label= " "];
+    S13 -> S14 [label= " "]; 
+
+    // Thermistor Readings FSM
+    S20 [label="(ENTRY)Pre-sync"];
+    S21 [label="Data Bus Tx:\nThermistor Readings\n (ID: 0x402)"];
+    S22 [label="Control Bus Tx:\nESTOP"];
+
+    S20 -> S21 [label="Synchronized"];
+    S21 -> S22 [label="Temp out of bounds"];
+    S21 -> S21 [label= " "];
+
+    // Load Cell Readings FSM
+    S30 [label="(ENTRY)Pre-sync"];
+    S31 [label="Data Bus Tx:\nLoad Cells Readings\n (ID: 0x403)"];
+    S32 [label="Increase Auger Speed"];
+    S33 [label="Decrease auger Speed"];
+    S34 [label="Control Bus Tx:\nESTOP\n (ID: 0x077)"];
+
+    S30 -> S31 [label=" "];
+    S31 -> S31 [label=" "];
+    S32 -> S31 [label=" "];
+    S33 -> S31 [label=" "];
+    S31 -> S32 [label="      "];
+    S31 -> S34 [label="Force out of bounds"];
+    S31 -> S33 [label="     "];
+
+    // Hydraulic Motor Readings FSM
+    S40 [label="(ENTRY)Pre-sync"];
+    S41 [label="Data Bus Tx:\nHydraulic Motor Readings\n (ID: 0x404)"];
+    S42 [label="Control Bus Tx:\nESTOP\n (ID: 0x077)"];
+
+    S40 -> S41 [label=" "];
+    S41 -> S42 [label="RPM or Torque out of bounds"];
+    S41 -> S41 [label= " "];
+
+    // CIM Motor Readings FSM
+    S50 [label="(ENTRY)Pre-sync"];
+    S51 [label="Data Bus Tx:\nCIM Motor Readings\n (ID: 0x405)"];
+    S52 [label="Control Bus Tx:\nESTOP\n (ID: 0x077)"];
+
+    S50 -> S51 [label=" "];
+    S51 -> S52 [label="RPM or Torque out of bounds"];    
+    S51 -> S51 [label= " "];
+}
