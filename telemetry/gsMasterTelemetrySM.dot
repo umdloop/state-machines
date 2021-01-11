@@ -1,0 +1,4 @@
+digraph newUSM {
+    S52 [label = "Control Bus Tx:\nTransmit Master Keep Alive\n(ID: 0x0A9)"];
+    S52 -> S52 [label = "1(T1)"];
+}
