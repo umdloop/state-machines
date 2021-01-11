@@ -1,28 +1,28 @@
 digraph newUSM {
-    // Receive TelemetryKeepAlive
+    // Receive HVKeepAlive
     S50 [label = "(ENTRY)Pre-Sync"];
-    S51 [label = "Control Bus Rx:\nHigh Voltage Keep Alive"];
-    S52 [label = "Control Bus Tx:\nE-STOP (Reason: 0x00)"];
+    S51 [label = "Control Bus Rx:\nHigh Voltage Keep Alive\n(ID: 0x0A6)"];
+    S52 [label = "Control Bus Tx:\nE-STOP (Reason: 0x00) (ID: 0x077)"];
 
     S50 -> S51 [label = "High Voltage Alive"];
     S51 -> S51 [label = "High Voltage Alive"];
     S51 -> S52 [label = "5(T2)"];
 
 
-    // Receive ExcavationKeepAlive
+    // Receive PipeJackingKeepAlive
     S60 [label = "(ENTRY)Pre-Sync"];
-    S61 [label = "Control Bus Rx:\nPipe Jacking Keep Alive"];
-    S62 [label = "Control Bus Tx:\nE-STOP (Reason: 0x01)"];
+    S61 [label = "Control Bus Rx:\nPipe Jacking Keep Alive\n(ID: 0x0A7)"];
+    S62 [label = "Control Bus Tx:\nE-STOP (Reason: 0x01) (ID: 0x077)"];
 
     S60 -> S61 [label="Pipe Jacking Alive"];
     S61 -> S61 [label="Pipe Jacking Alive"];
     S61 -> S62 [label="5(T3)"];
 
 
-    // Receive EKeepAlive
+    // Receive PowerAndSafetyKeepAlive
     S80 [label = "(ENTRY)Pre-Sync"];
-    S81 [label = "Control Bus Rx:\nPower and Safety Keep Alive"];
-    S82 [label = "Control Bus Tx:\nE-STOP (Reason: 0x03)"];
+    S81 [label = "Control Bus Rx:\nPower and Safety Keep Alive\n(ID: 0x0A8)"];
+    S82 [label = "Control Bus Tx:\nE-STOP (Reason: 0x03) (ID: 0x077)"];
 
     S80 -> S81 [label = "Power and Safety Alive"];
     S81 -> S81 [label = "Power and Safety Alive"];
@@ -31,4 +31,3 @@ digraph newUSM {
 }
 
 // include state where estop occurs (another flag)
-

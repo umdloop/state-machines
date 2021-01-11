@@ -1,8 +1,8 @@
 digraph newUSM {
     // Receive TelemetryKeepAlive
     S50 [label = "(ENTRY)Pre-Sync"];
-    S51 [label = "Control Bus Rx:\nSteering Keep Alive"];
-    S52 [label = "Control Bus Tx:\nE-STOP (Reason: 0x00)"];
+    S51 [label = "Control Bus Rx:\nSteering Keep Alive\n(ID: 0x078)"];
+    S52 [label = "Control Bus Tx:\nE-STOP (Reason: 0x00) (ID: 0x077)"];
 
     S50 -> S51 [label = "Steering Alive"];
     S51 -> S51 [label = "Steering Alive"];
@@ -11,8 +11,8 @@ digraph newUSM {
 
     // Receive ExcavationKeepAlive
     S60 [label = "(ENTRY)Pre-Sync"];
-    S61 [label = "Control Bus Rx:\nExcavation Keep Alive"];
-    S62 [label = "Control Bus Tx:\nE-STOP (Reason: 0x01)"];
+    S61 [label = "Control Bus Rx:\nExcavation Keep Alive\n(ID: 0x079)"];
+    S62 [label = "Control Bus Tx:\nE-STOP (Reason: 0x01) (ID: 0x077)"];
 
     S60 -> S61 [label="Excavation Alive"];
     S61 -> S61 [label="Excavation Alive"];
@@ -21,8 +21,8 @@ digraph newUSM {
 
     // Receive SensorManagementKeepAlive
     S70 [label = "(ENTRY)Pre-Sync"];
-    S71 [label = "Control Bus Rx:\nSensor Management Keep Alive\n(ID: 0x08F)"];
-    S72 [label = "Control Bus Tx:\nE-STOP (Reason: 0x02)"];
+    S71 [label = "Control Bus Rx:\nSensor Management Keep Alive\n(ID: 0x080)"];
+    S72 [label = "Control Bus Tx:\nE-STOP (Reason: 0x02) (ID: 0x077)"];
 
     S70 -> S71 [label = "Sensor Management Alive"];
     S71 -> S71 [label = "Sensor Management Alive"];
@@ -31,7 +31,7 @@ digraph newUSM {
 
     // Receive EKeepAlive
     S80 [label = "(ENTRY)Pre-Sync"];
-    S81 [label = "Control Bus Rx:\nPower and Safety Keep Alive"];
+    S81 [label = "Control Bus Rx:\nPower and Safety Keep Alive\n(ID: 0x081)"];
     S82 [label = "Control Bus Tx:\nE-STOP (Reason: 0x03)"];
 
     S80 -> S81 [label = "Power and Safety Alive"];
@@ -41,4 +41,3 @@ digraph newUSM {
 }
 
 // include state where estop occurs (another flag)
-
