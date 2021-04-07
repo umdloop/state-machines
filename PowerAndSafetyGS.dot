@@ -1,0 +1,31 @@
+digraph PowerAndSafety {
+
+S10 [label="(ENTRY)Pre-Sync"];
+S11 [label="Dispatch: Synchronized"];
+S12 [label="Control Bus Rx: 0x84 \nMaster Keep Alive"];
+S13 [label="Control Bus Tx:\nE-STOP (Reason: 0x01)\n(ID: 0x077)"];
+
+
+S10 -> S11 [label="Master Alive"];
+S11 -> S12 [label=" "];
+S12 -> S12 [label="Master Alive"];
+S12 -> S13 [label="5(T1)"];
+
+/*sending keep alive, keep alive id x, every y ms*/
+
+S01 [label="(ENTRY)Pre-Sync"];
+S00 [label="Control Bus Tx:0x85"];
+
+S01 -> S00 [label="Synchronized"];
+S00 -> S00 [label="1(T2)"];
+
+/*receive power down request*/
+S20 [label="(ENTRY)Pre-Sync"];
+S21 [label = "Idle"];
+S22 [label = "Power off"];
+
+S20 -> S21 [label="Synchronized"];
+S21 -> S22 [label = "Received_ID_0x205"];
+S22 -> S21 [label = " "];
+
+}

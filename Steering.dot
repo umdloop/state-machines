@@ -1,0 +1,73 @@
+digraph Steering {
+
+S10 [label="(ENTRY)Pre-Sync"];
+S11 [label="Dispatch: Synchronized"];
+S12 [label="Control Bus Rx: x\nMaster Keep Alive"];
+S13 [label="Control Bus Tx:\nE-STOP (Reason: 0x01)\n(ID: 0x077)"];
+
+
+S10 -> S11 [label="Master Alive"];
+S11 -> S12 [label=" "];
+S12 -> S12 [label="Master Alive"];
+S12 -> S13 [label="5(T1)"];
+
+/*sending keep alive, keep alive id x, every y ms*/
+
+S01 [label="(ENTRY)Pre-Sync"];
+S00 [label="Control Bus Tx:0x78"];
+
+S01 -> S00 [label="Synchronized"];
+S00 -> S00 [label="1(T2)"];
+
+    entry [label="(ENTRY)Power up routine"];
+    entry1 [label="(ENTRY)Power up routine"];
+    entry2 [label="(ENTRY)Power up routine"];
+    entry3 [label="(ENTRY)Power up routine"];
+    entry4 [label="(ENTRY) Synchronize"];
+    sensync [label = "Control Bus Rx: Steering Keep alive\n (ID: 0x08e)"];
+    sendSync [label = "dispacth: Synchronized"];
+    Master [label = "Control Bus Rx:\n 0x099 Master Keep Alive"];
+    sync [label="Sync"];
+    Idle [label="Idle"];
+    DCVon [label="turn on DCV"];
+    DCVoff [label="turn off DCV"];
+    checkStatus [label = "verify DCV on/off"];
+    status [label="Control Bus Tx:\n Operations success/failure 0x513-0x514"];
+    Depress [label = "Depressurize"];
+    empty [label = "Drain all valves"];
+    estop [label="Control Bus Tx: E-STOP(Reason: 0x)\n(ID: 0x077)"];
+    estop1 [label="Control Bus Tx: E-STOP(Reason: 0x)\n(ID: 0x077)"];
+    estop2 [label="Control Bus Tx: E-STOP(Reason: 0x)\n(ID: 0x077)"];
+    estop3 [label="Control Bus Tx: E-STOP(Reason: 0x)\n(ID: 0x077)"];
+    TandP [label="Data Bus Rx: Temperature and Presssure"];
+    Encoder [label = "Data Bus Tx: Encoder readings\n (ID: 0x501)"];
+  
+
+
+    entry -> sync [label =" "];
+    entry1 -> TandP [label = "Master Alive"];
+    entry2 -> Encoder [label = "Master Alive"];
+    sync -> Idle [label="Master Alive"];
+    Idle -> DCVon [label="DCV on directive"];
+    Idle -> DCVoff [label="DCV off directive"];
+    Idle -> Depress [label = "Depressurize directive"];
+    Idle -> empty [label = "Drain all directive"];
+    Depress -> status[label =" "];
+    empty -> status[label =" "];
+    DCVon -> checkStatus [label = "1(T1)"];
+    DCVoff -> checkStatus [label = "1(T2)"];
+    checkStatus -> status [label = "Success"];
+    TandP -> TandP [label = "1(T3)"];
+    TandP -> estop1 [label = "No response at timestep"];
+    Encoder -> estop2 [label = "No response at timestep"];
+    Encoder -> Encoder [label = "1(T5)"];
+    status->Idle[label =" "];
+    checkStatus -> estop [label = "Failure"];
+
+    entry3->sensync [label = "Synchronized"];
+    sensync->sensync [label = "1(T4)"];
+    entry4->sendSync[label = " "];
+    sendSync->Master[label = " "];
+    Master->Master [label = "Master Alive"];
+    Master->estop3 [label = "5(T6)"];
+ }

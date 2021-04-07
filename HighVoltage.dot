@@ -1,0 +1,67 @@
+digraph HighVoltage{
+S00 [label="(ENTRY) Pre-Sync"];
+S01 [label="Power up routine"];
+S02 [label="Pressurizing, Motor on, Oil cooler on"];
+S03 [label="Pressurized, Motor on, Oil cooler on"];
+S04 [label="Idle, Motor off, Oil cooler off"];
+S05 [label="Control Bus Tx:\nE-STOP (Reason: 0x)\n(ID: 0x077)"];
+
+S00 -> S01 [label="Synchronized"];
+S01 -> S04 [label="Power up complete"];
+S03 -> S05 [label="MC Message Invalid"];
+S02 -> S05 [label="MC Message Invalid"];
+S03 -> S04 [label="Depressurize"];
+S02 -> S03 [label="Fully pressurized"];
+S04 -> S02 [label="Start pressurizing"];
+S02 -> S02 [label="Pressure below designated pressure"];
+S02 -> S04 [label="Depressurize"];
+
+S10 [label="(ENTRY)Pre-Sync"];
+S11 [label="Dispatch: Synchronized"];
+S12 [label="Control Bus Rx:\nTelemetry Keep Alive\n(ID: 0x0A9)"];
+S13 [label="Control Bus Tx:\nE-STOP (Reason: 0x)\n(ID: 0x077)"];
+
+S10 -> S11 [label="Master Alive"];
+S11 -> S12 [label=" "];
+S12 -> S12 [label="Master Alive"];
+S12 -> S13 [label="5(T2)"];
+
+S21 [label="(ENTRY)Pre-Sync"];
+S20 [label="Control Bus Tx:\nHV Keep Alive\n(ID: 0x0A6)"];
+
+S21 -> S20 [label="Synchronized"];
+S20 -> S20 [label="1(T1)"];
+
+S41		[label="(ENTRY)Pre-Sync"];
+S42		[label="Idle"];
+S43		[label="Process Data"];
+S44		[label="Control Bus Tx:\nE-STOP (Reason: 0x)\n(ID: 0x077)"];
+
+S41 -> S42     [label="Synchronized"];
+S42 -> S43     [label="Data Bus Rx: \nPressure Readings\n(ID: 0x901)\n"];
+S43 -> S44     [label="Out of Bounds"];
+
+S43 -> S42     [label="100(T3)"];
+
+S31		[label="(ENTRY)Pre-Sync"];
+S32		[label="Idle"];
+S33		[label="Process Data"];
+S34		[label="Control Bus Tx:\nE-STOP (Reason: 0x)\n(ID: 0x077)"];
+
+S31 -> S32     [label="Synchronized"];
+S32 -> S33     [label="Data Bus Rx:\nMotor RPM Readings\n(ID: 0x903)\n"];
+S33 -> S34     [label="Out of Bounds"];
+
+S33 -> S32     [label="100(T5)"];
+
+S50		[label="(ENTRY)Pre-Sync"];
+S51		[label="Idle"];
+S52		[label="Process Data"];
+S53		[label="Control Bus Tx:\nE-STOP (Reason: 0x)\n(ID: 0x077)"];
+
+S50 -> S51     [label="Synchronized"];
+S51 -> S52     [label="Data Bus Rx:\nTemperature Readings\n(ID: 0x902)\n"];
+S52 -> S53     [label="Out of Bounds"];
+
+S52 -> S51     [label="100(T4)"];
+}

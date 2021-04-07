@@ -1,0 +1,55 @@
+digraph Power_and_Safety {
+
+// Keep Alive Transmission FSM
+S01 [label="(ENTRY)Pre-Sync"];
+S00 [label="Control Bus Tx:\n Keep Alive"];
+
+S01 -> S00 [label="Synchronized"];
+S00 -> S00 [label="1(T1)"];
+
+
+S10 [label="(ENTRY)Synchronize"];
+S11 [label="Dispatch: Synchronized"];
+S12 [label="Control Bus Rx:\nMaster Keep Alive"];
+S13 [label="Control Bus Tx:\nE-STOP "];
+
+
+S10 -> S11 [label="Master Alive"];
+S11 -> S12 [label=" "];
+S12 -> S12 [label="Master Alive"];
+S12 -> S13 [label="5(T2)"];
+
+
+S30 [label="(ENTRY)Pre-Sync"];
+S31 [label="Data Bus Tx:\nCurrent Readings"];
+S32 [label="Control Bus Tx:\nE-STOP"];
+
+S30 -> S31 [label="Synchronized"];
+S31 -> S31 [label="100(T5)"];
+S31 -> S32 [label="Out of Bounds"];
+
+S40 [label="(ENTRY)Pre-Sync"];
+S41 [label="Data Bus Tx:\nThermistor Temperature Readings"];
+S42 [label="Control Bus Tx:\nE-STOP"];
+
+S40 -> S41 [label="Synchronized"];
+S41 -> S41 [label="100(T5)"];
+S41 -> S42 [label="Out of Bounds"];
+
+S20 [label="(ENTRY)Pre-Sync"];
+S21 [label="Data Bus Tx:\nVoltage Readings"];
+S22 [label="Control Bus Tx:\nE-STOP"];
+
+S20 -> S21 [label="Synchronized"];
+S21 -> S21 [label="100(T5)"];
+S21 -> S22 [label="Out of Bounds"];
+
+S50 [label="(ENTRY)Pre-Sync"];
+S51 [label="Data Bus Tx:\nCheck Isolation Status"];
+S52 [label="Control Bus Tx:\nE-STOP\nTurn on Safety LED"];
+
+S50 -> S51 [label="Synchronized"];
+S51 -> S51 [label="100(T5)"];
+S51 -> S52 [label="Not isolated"];
+
+}

@@ -1,0 +1,155 @@
+digraph PipeJacking {
+
+S10 [label="(ENTRY)Pre-Sync"];
+S11 [label="Dispatch: Synchronized"];
+S12 [label="Control Bus Rx:\nTelemetry Keep Alive\n(ID: 0x84)"];
+S13 [label="Control Bus Tx:\nE-STOP (Reason: 0x01)\n(ID: 0x077)"];
+
+S10 -> S11 [label="Master Alive"];
+S11 -> S12 [label=" "];
+S12 -> S12 [label="Master Alive"];
+S12 -> S13 [label="5(T1)"];
+
+/*sending keep alive, keep alive id x, every y ms*/
+
+S01 [label="(ENTRY)Pre-Sync"];
+S00 [label="Control Bus Tx:\nPipejack Keep Alive\n(ID: 0x08e)"];
+
+S01 -> S00 [label="Synchronized"];
+S00 -> S00 [label="1(T2)"];
+
+//Pipe jacking Control FSM
+S90 [label="(ENTRY)Power Up Routine"];
+S91 [label="Sync"];
+S92 [label="Idle"];
+S93 [label="Depressurize\nOpen Drain Valves"];
+S94 [label="Depressurize Status"];
+S95 [label="Control Bus Tx:\nDepressurize Success\n(ID: 0x801)"];
+S96 [label="Control Bus Tx:\nDepressurize Failure\n(ID: 0x802)"];
+
+S97 [label="Retract DCV"];
+S98 [label="Cylinders Status"];
+S99 [label="Control Bus Tx:\nRetract Success\n(ID: 0x803)"];
+S100 [label="Control Bus Tx:\nRetract Failure\n(ID: 0x804)"];
+
+S108 [label="Extend DCV"];
+S109 [label="Cylinders Status"];
+S110 [label="Control Bus Tx:\nExtend Success\n(ID: 0x807)"];
+S111 [label="Control Bus Tx:\nExtend Failure\n(ID: 0x808)"];
+
+S101 [label="Hold DCV"];
+S102 [label="Pressure Status"];
+S103 [label="Control Bus Tx:\nHold Success\n(ID: 0x805)"];
+S104 [label="Control Bus Tx:\nHold Failure\n(ID: 0x806)"];
+
+//   S120 [label="Idle"]
+S121 [label="Pressureize\nClose Drain Vlves"];
+S122 [label="Pressurize Status"];
+S123 [label="Control Bus Tx:\nPressurize Success\n(ID: 0x809)"];
+S124 [label="Control Bus Tx:\nPressurize Failure\n(ID: 0x810)"];
+
+S90 -> S91 [label=" "];
+S91 -> S92 [label="Master Alive"];
+S92 -> S93 [label="Received ID 0x608"];
+S93 -> S94 [label="20(T3)"];
+S94 -> S94 [label="Pressure Drop"];
+S94 -> S95 [label="Depressureized Pressure Range"];
+S95 -> S92 [label=" "];
+S94 -> S96 [label="Pressure Unchanging"];
+S96 -> S92 [label=" "];
+
+S92 -> S97 [label="Received ID 0x605"];
+S97 -> S98 [label="20(T3)"];
+S98 -> S98 [label="Closer Position"];
+S98 -> S99 [label= "Fully Retract"];
+S98 -> S100 [label="Position Unchanging"];
+S99 -> S92 [label=" "];
+S100 -> S92 [label=" "];
+
+S92 -> S108 [label="Received ID 0x604"];
+S108 -> S109 [label="20(T3)"];
+S109 -> S109 [label="Further Position"];
+S109 -> S110 [label= "Fully Retract"];
+S109 -> S111 [label="Position Unchanging"];
+S110 -> S92 [label=" "];
+S111 -> S92 [label=" "];
+
+S92 -> S101 [label="Received ID 0x610"];
+S101 -> S102 [label="20(T3)"];
+S102 -> S103 [label="Pressure Unchanging"];
+S102 -> S104 [label="Pressure changing"];
+S103 -> S92 [label=" "];
+S104 -> S92 [label=" "];
+
+
+S92 -> S121 [label="Received ID 0x606"];
+S121 -> S122 [label="20(T3)"];
+S122 -> S122 [label="Pressure Raise"]
+S122 -> S123 [label="Pressurized"];
+S122 -> S124 [label="Pressure Unchanging"]
+S123 -> S92 [label= ""];
+S124 -> S92 [label= ""];
+
+S125 [label="Open Drain Valves, Retract DCV"];
+S126 [label="Control Bus Tx:\nOpen All Valves Success\n(ID: 0x811)"];
+S127 [label="Control Bus Tx:\nOpen All Valves Failure\n(ID:0x812)"];
+
+S92 -> S125 [label="Received ID 0x609"];
+S125 -> S126 [label="Open All Valves Success"];
+S125 -> S127 [label="Open All Valves Failure"];
+S126 -> S92 [label=""];
+S127 -> S92 [label=""];
+
+
+S51 [label="(ENTRY)Pre-Sync"];
+S52 [label="Idle"];
+S53 [label="Open drain valve"];
+S54 [label="Close drain valve"];
+
+S51 -> S52 [label="Synchronized"];
+S52 -> S53 [label="Received ID 0x608"];
+S53 -> S52 [label=" "];
+S52 -> S54 [label="Received ID 0x610"];
+S54 -> S52 [label=" "];
+
+S60 [label="(ENTRY)Pre-Sync"];
+S61 [label="Data Bus Tx:\nLaser Distance Sensor Readings (ID: 0x904)"];
+S62 [label="Control Bus Tx:\nE-STOP (Reason: 0x) (ID: 0x077)"];
+
+S60 -> S61 [label="Synchronized"];
+S61 -> S61 [label=" 100(T6)"];
+S61 -> S62 [label="No Reading"];
+
+S70 [label="(ENTRY)Pre-Sync"];
+S71 [label="Data Bus Tx: 0x801\nPressure Readings"];
+S72 [label="E-STOP(Reason:0x)"];
+
+S70 -> S71 [label="Synchronized"];
+S71 -> S71 [label="100(T5)"];
+S71 -> S72 [label="Pressure over limit"];
+
+S73 [label="(ENTRY)Pre-Sync"];
+S74 [label="Data Bus Tx: 0x802\nTemperature Readings"];
+S75 [label="E-STOP(Reason:0x)"];
+
+S73 -> S74 [label="Synchronized"];
+S74 -> S74 [label="100(T4)"];
+S74 -> S75 [label="Temperature over limit"];
+
+S80 [label="(ENTRY)Pre-Sync"];
+S81 [label="Control Bus Tx:\nE-STOP (Reason: 0x)"];
+
+S80 -> S81 [label="Synchronized"];
+S81 -> S81 [label="1(T1)"];
+
+S82 [label="(ENTRY)Pre-Sync"];
+S83 [label="Dispatch: Synchronized"];
+S84 [label="Control Bus Rx: x\nMaster Keep Alive"];
+S85 [label="Control Bus Tx:\nE-STOP (Reason: 0x)"];
+
+S82 -> S83 [label="Master Alive"];
+S83 -> S84 [label=" "];
+S84 -> S84 [label="Master Alive"];
+S84 -> S85 [label="5(T2)"];
+
+}

@@ -1,0 +1,123 @@
+digraph Excavation2{
+
+
+// Need Stuff for CIM motor turn on and off?
+// Cutterhead Control FSM
+S00 [label="(ENTRY)Power up Routine"];
+S01 [label="Sync"];
+S02 [label="Idle"];
+S03 [label="Turn on cutterhead and auger (ID: 0x100)"];
+S04 [label="Cutterhead and auger on status"];
+S05 [label="Control Bus Tx:\nTurn on cutterhead and auger success (ID: 0x108)"];
+S06 [label="Control Bus Tx:\nTurn on cutterhead and auger failure (ID: 0x109)"];
+
+
+S07 [label="Turn off cutterhead and auger (ID: 0x101)"];
+S08 [label="Cutterhead and auger off status"]
+S09 [label="Control Bus Tx:\nTurn off cutterhead and auger success (ID: 0x110)"];
+S10 [label="Control Bus Tx:\nTurn off cutterhead and auger failure (ID: 0x111)"];
+    
+//Deprssurizing
+S25 [label= "Depressurize (ID: 0x102)"];
+S26 [label="Depressurize status"];
+S27 [label="Control Bus Tx:\nDepressurize failure (ID: 0x405)"];
+S28 [label="Control Bus Tx:\nDepressurize success (ID: 0x404)"];
+
+//Open all valves
+S29 [label="Open all valves (ID: 0x103)"];
+S30 [label="Open all valves status"];
+S31 [label="Control Bus Tx:\nOpen all valves failure (ID: 0x407)"];
+S32 [label="Control Bus Tx:\nOpen all valves success (ID: 0x406)"];
+
+S00 -> S01 [label=" "];
+S01 -> S02 [label="Master Alive"];
+S02 -> S03 [label=" "];
+S03 -> S04 [label=" "];
+S04 -> S05 [label=" "];
+S05 -> S02 [label=" "]; 
+S06 -> S02 [label=" "];
+S09 -> S02 [label=" "];
+S10 -> S02 [label=" "];
+S04 -> S06 [label=" "];
+
+S02 -> S07 [label=" "];
+S07 -> S08 [label=" "];
+S08 -> S09 [label=" "];
+S08 -> S10 [label=" "];
+
+S02 -> S25 [label=" "];
+S25 -> S26 [label=" "];
+S26 -> S27 [label=" "];
+S26 -> S28 [label=" "];
+S27 -> S02 [label=" "];
+S28 -> S02 [label=" "];
+
+S02 -> S29 [label=" "];
+S29 -> S30 [label=" "];
+S30 -> S31 [label=" "];
+S30 -> S32 [label=" "];
+S31 -> S02 [label=" "];
+S32 -> S02 [label=" "];
+
+// Hydraulic Motor Readings FSM
+S40 [label="(ENTRY)Pre-sync"];
+S41 [label="Data Bus Tx:\nHydraulic Motor Readings\n (ID: 0x404)"];
+S42 [label="Control Bus Tx:\nESTOP\n (ID: 0x077)"];
+
+S40 -> S41 [label=" "];
+S41 -> S42 [label="RPM or Torque out of bounds"];
+S41 -> S41 [label= " "];
+
+// CIM Motor Readings FSM
+S50 [label="(ENTRY)Pre-sync"];
+S51 [label="Data Bus Tx:\nCIM Motor Readings\n (ID: 0x405)"];
+S52 [label="Control Bus Tx:\nESTOP\n (ID: 0x077)"];
+
+S50 -> S51 [label=" "];
+S51 -> S52 [label="RPM or Torque out of bounds"];    
+S51 -> S51 [label= " "];
+
+    // Keep Alive Transmission FSM
+S60 [label="(ENTRY)Pre-Sync"];
+S61 [label="Control Bus Tx:\nBC Keep Alive"];
+
+S60 -> S61 [label="Synchronized"];
+S61 -> S61 [label= " "];
+
+// Keep Alive Reception FSM
+S70 [label="(ENTRY)Synchronize"];
+S71 [label="Dispatch: Synchronized"];
+S72 [label="Control Bus Rx:\nMaster Keep Alive"];
+S73 [label="Control Bus Tx:\nE-STOP\n (ID: 0x077)"];
+S74 [label="Turn off Cutterhead"];
+
+S70 -> S71 [label="Master Alive"];
+S71 -> S72 [label=" "];
+S72 -> S72 [label="Master Alive"];
+S72 -> S73 [label= " "];
+S73 -> S74 [label= " "]; 
+
+// Thermistor Readings FSM
+S80 [label="(ENTRY)Pre-sync"];
+S81 [label="Data Bus Tx:\nThermistor Readings\n (ID: 0x402)"];
+S82 [label="Control Bus Tx:\nESTOP"];
+
+S80 -> S81 [label="Synchronized"];
+S81 -> S82 [label="Temp out of bounds"];
+S81 -> S81 [label= " "];
+
+// Load Cell Readings FSM
+S90 [label="(ENTRY)Pre-sync"];
+S91 [label="Data Bus Tx:\nLoad Cells Readings\n (ID: 0x403)"];
+S92 [label="Increase Auger Speed"];
+S93 [label="Decrease auger Speed"];
+S94 [label="Control Bus Tx:\nESTOP\n (ID: 0x077)"];
+
+S90 -> S91 [label=" "];
+S91 -> S91 [label=" "];
+S92 -> S91 [label=" "];
+S93 -> S91 [label=" "];
+S91 -> S92 [label="      "];
+S91 -> S94 [label="Force out of bounds"];
+S91 -> S93 [label="     "];
+}
