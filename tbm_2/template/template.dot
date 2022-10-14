@@ -1,0 +1,53 @@
+digraph template {
+//receiving keep alive (id x), ESTOP id y, with timeout z
+
+S10 [label="(ENTRY)Pre-Sync"];
+S11 [label="Dispatch: Synchronized"];
+S12 [label="Control Bus Rx: x\nMaster Keep Alive"];
+S13 [label="Control Bus Tx:\nE-STOP (Reason: 0x)\n(ID: 0x077)"];
+
+
+S10 -> S11 [label="Master Alive"];
+S11 -> S12 [label=" "];
+S12 -> S12 [label="Master Alive"];
+S12 -> S13 [label="z(T1)"];
+
+/*sending keep alive, keep alive id x, every y ms*/
+
+S01 [label="(ENTRY)Pre-Sync"];
+S00 [label="Control Bus Tx:\nE-STOP (Reason: 0x)\n(ID: 0x077)"];
+
+S01 -> S00 [label="Synchronized"];
+S00 -> S00 [label="y(T2)"];
+
+/*collect and process sensor data, sampling at x ms, send at CAN ID y,
+ESTOP id z*/
+/*one for each type of sensor*/
+
+S30 [label="(ENTRY)Pre-Sync"];
+S31 [label="Data Bus Tx: y\nData Readings"];
+S32 [label="Control Bus Tx:\nE-STOP (Reason: 0x)\n(ID: 0x077)"];
+
+S30 -> S31 [label="Synchronized"];
+S31 -> S31 [label="x(T3)"];
+S31 -> S32 [label="Out of Bounds"];
+
+/*receive and process sensor data, CAN Id x*/
+S41		[label="(ENTRY)Pre-Sync"];
+S42		[label="Idle"];
+S43		[label="Process Data"];
+S44		[label="Control Bus Tx:\nE-STOP (Reason: 0x)\n(ID: 0x077)"];
+
+S41 -> S42     [label="Synchronized"];
+S42 -> S43     [label="Data Bus Rx: x\nData Received\n"];
+S43 -> S44     [label="Out of Bounds"];
+
+S43 -> S42     [label=" "];
+
+/*any other state machine */
+S50		[label="(ENTRY)Pre-Sync"];
+S51   [label="Some state"];
+
+S50 -> S51    [label="Synchronized"];
+
+}

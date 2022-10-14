@@ -1,0 +1,17 @@
+digraph "Excavation cutterhead-auger ops" {
+	" "
+	A [label="Cutter Head Spins"]
+	B [label="I Auger & CH Spins"]
+	C [label="Cart Auger Spins & I Auger & CH"]
+	D [label="Stop Cart Auger"]
+	E [label="Cart Away"]
+	F [label="Stop I Auger & CH"]
+	" " -> A [label="Start Jacking"]
+	A -> B [label="EPB at Nominal"]
+	B -> C [label="Muck Cart Present"]
+	C -> D [label="Muck Cart Full"]
+	D -> E [label="Send Cart Back to Surface"]
+	E -> E [label="Transfer Box Not Full"]
+	E -> F [label="Transfer Box Full"]
+	F -> C [label="Cart Returns"]
+}
