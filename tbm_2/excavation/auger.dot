@@ -1,0 +1,108 @@
+digraph Excavation2{
+
+
+    // Need Stuff for CIM motor turn on and off?
+    // Cutterhead Control FSM
+    S01 [label="(ENTRY) Power Up"];
+    S02 [label="Idle"];
+    S03 [label="Turn on cutterhead and auger (ID: 0x100)"];
+    S04 [label="Cutterhead and auger on status"];
+    S05 [label="Update keep-alive:\nTurn on cutterhead and auger success"];
+    S06 [label="Update keep-alive:\nTurn on cutterhead and auger failure"];
+
+
+    S07 [label="Turn off cutterhead and auger (ID: 0x101)"];
+    S08 [label="Cutterhead and auger off status"]
+    S09 [label="Update keep-alive:\nTurn off cutterhead and auger success"];
+    S10 [label="Update keep-alive:\nTurn off cutterhead and auger failure"];
+
+    //Deprssurizing
+    S25 [label= "Depressurize (ID: 0x102)"];
+    S26 [label="Depressurize status"];
+    S27 [label="Update keep-alive:\nDepressurize failure"];
+    S28 [label="Update keep-alive:\nDepressurize success"];
+
+    //Open all valves
+    S29 [label="Open all valves (ID: 0x103)"];
+    S30 [label="Open all valves status"];
+    S31 [label="Update keep-alive:\nOpen all valves failure"];
+    S32 [label="Update keep-alive:\nOpen all valves success"];
+
+    S01 -> S02 [label="Init"];
+    S02 -> S03 [label=" "];
+    S03 -> S04 [label=" "];
+    S04 -> S05 [label=" "];
+    S05 -> S02 [label=" "];
+    S06 -> S02 [label=" "];
+    S09 -> S02 [label=" "];
+    S10 -> S02 [label=" "];
+    S04 -> S06 [label=" "];
+
+    S02 -> S07 [label=" "];
+    S07 -> S08 [label=" "];
+    S08 -> S09 [label=" "];
+    S08 -> S10 [label=" "];
+
+    S02 -> S25 [label=" "];
+    S25 -> S26 [label=" "];
+    S26 -> S27 [label=" "];
+    S26 -> S28 [label=" "];
+    S27 -> S02 [label=" "];
+    S28 -> S02 [label=" "];
+
+    S02 -> S29 [label=" "];
+    S29 -> S30 [label=" "];
+    S30 -> S31 [label=" "];
+    S30 -> S32 [label=" "];
+    S31 -> S02 [label=" "];
+    S32 -> S02 [label=" "];
+
+
+  /*
+    // Auger Control FSM
+    S88 [label="(ENTRY)Power up Routine"];
+    S89 [label="Sync"];
+    S90 [label="Idle"];
+    S31 [label="Increase Auger Speed"];
+    S80 [label="Turn on Auger"];
+    S81 [label="Control Bus Tx:\nTurn on auger failure"];
+    S82 [label="Control Bus Tx:\nTurn on auger success"];
+    S83 [label="Turn on auger status"];
+    S84 [label="Turn off Auger"];
+    S85 [label="Update keep-alive:\nTurn off auger failure"];
+    S86 [label="Update keep-alive:\nTurn off auger success"];
+    S87 [label="Turn off auger status"];
+
+    S88 -> S89 [label=" "];
+    S89 -> S90 [label="Master Alive"];
+    S90 -> S84 [label=" "];
+    S84 -> S87 [label=" "];
+    S87 -> S85 [label=" "];
+    S87 -> S86 [label=" "];
+    S85 -> S90 [label=" "];
+    S86 -> S90 [label=" "];
+
+    S90 -> S80 [label=" "];
+    S80 -> S83 [label=" "];
+    S83 -> S81 [label=" "];
+    S83 -> S82 [label=" "];
+    S81 -> S90 [label=" "];
+    S82 -> S90 [label=" "];
+
+    S90 -> S31 [label=" "];
+    S31 -> S34 [label=" "];
+    S34 -> S32 [label=" "];
+    S34 -> S33 [label=" "];
+    S32 -> S90 [label=" "];
+    S33 -> S90 [label=" "];
+
+    S90 -> S35 [label=" "];
+    S35 -> S38 [label=" "];
+    S38 -> S36 [label=" "];
+    S38 -> S37 [label=" "];
+    S37 -> S90 [label=" "];
+    S36 -> S90 [label=" "];
+*/
+
+}
+

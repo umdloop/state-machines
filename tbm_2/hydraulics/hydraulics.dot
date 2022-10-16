@@ -1,11 +1,11 @@
 digraph hydraulics{
-    S00 [label="start operation"];
-    S01 [label="extend pipe jacking and turn cutterhead"];
+    S00 [label="Initialize"];
+    S01 [label="Boring (Extend cylinders, turn cutterhead)"];
     S02 [label="close solenoids for pipe jacking and steering"];
     S03 [label="pipe jacking solenoids retract and oil cooler on"];
     S04 [label="depressurize system"];
 
-    S00 -> S01;
+    S00 -> S01 [label="Close drains"];
     S01 -> S01 [label="pipe jacks not fully extended"];
     S01 -> S02 [label="pipe jacks fully extended"];
     S02 -> S03 [label="system health verified"];
