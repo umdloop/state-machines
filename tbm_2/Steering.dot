@@ -1,24 +1,21 @@
 digraph Steering {
-    entry [label="(ENTRY)"];
-    Idle [label="Idle"];
-    status [label="Update keep-alive state"]
-    DCVon [label="Enable DCV"];
-    DCVoff [label="Disable DCV"];
-    checkStatus [label = "Verify DCV state"];
-    Depress [label = "Depressurize"];
-    estop [label = "ESTOP\n(ID: 0x077)"]
-    empty [label = "Drain all valves"];
+    S00 [label="(ENTRY)\nEnd active excavation"];
+    S01 [label="Idle"];
+    S02 [label="TBM Position Known"];
+    S03 [label="TBM Corrections Calculated"];
+    S04 [label="Pressurize"];
+    S05 [label="Ready to steer"];
+    S06 [label = "Moving steering cylinders"];
+    S07 [label = "ESTOP\n(ID: 0x077)"];
 
-    entry -> Idle [label =" "];
-    Idle -> DCVon [label="Enable DCV directive"];
-    Idle -> DCVoff [label="Disable DCV directive"];
-    Idle -> Depress [label = "Depressurize directive"];
-    Idle -> empty [label = "Drain all directive"];
-    Depress -> status[label =" "];
-    empty -> status[label =" "];
-    DCVon -> checkStatus [label = " "];
-    DCVoff -> checkStatus [label = " "];
-    checkStatus -> status [label = " "];
-    status->Idle[label =" "];
-    checkStatus -> estop [label = "Failure case"];
+    S00 -> S01 [label=" "];
+    S01 -> S02 [label="Navigation"];
+    S02 -> S03 [label="Calculate correction"];
+    S03 -> S04 [label="Enable HV motor"];
+    S04 -> S05 [label="At nominal steering pressure"];
+    S05 -> S05 [label="Read hydraulic pressure"]
+    S05 -> S06 [label="Close drains"];
+    S06 -> S01 [label="Reached correct path"];
+    S06 -> S06 [label="Not at desired cylinder position"];
+    S05 -> S07 [label="Steering failure"];
  }
