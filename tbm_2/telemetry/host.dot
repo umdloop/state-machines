@@ -1,0 +1,10 @@
+digraph host_fsm {
+    S09 [label="Pre-INIT"];
+    S10 [label="Normal ops"];
+    S11 [label="ESTOP\n(ID: 0x077)"];
+
+    S09 -> S10[label="INIT"];
+    S10 -> S10[label="Receive UDP keep-alive at 10Hz"]
+    S10 -> S11[label="ESTOP"]
+    S11 -> S10[label="Recover"]
+}
