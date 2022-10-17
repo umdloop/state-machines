@@ -11,7 +11,7 @@ digraph Steering {
     S00 -> S01 [label=" "];
     S01 -> S02 [label="Navigation"];
     S02 -> S03 [label="Calculate correction"];
-    S03 -> S04 [label="Enable HV motor"];
+    S03 -> S04 [label="Engage HV motor"];
     S04 -> S05 [label="At nominal steering pressure"];
     S05 -> S05 [label="Read hydraulic pressure"]
     S05 -> S06 [label="Close drains"];
