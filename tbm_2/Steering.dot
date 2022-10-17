@@ -1,0 +1,24 @@
+digraph Steering {
+    entry [label="(ENTRY)"];
+    Idle [label="Idle"];
+    status [label="Update keep-alive state"]
+    DCVon [label="Enable DCV"];
+    DCVoff [label="Disable DCV"];
+    checkStatus [label = "Verify DCV state"];
+    Depress [label = "Depressurize"];
+    estop [label = "ESTOP\n(ID: 0x077)"]
+    empty [label = "Drain all valves"];
+
+    entry -> Idle [label =" "];
+    Idle -> DCVon [label="Enable DCV directive"];
+    Idle -> DCVoff [label="Disable DCV directive"];
+    Idle -> Depress [label = "Depressurize directive"];
+    Idle -> empty [label = "Drain all directive"];
+    Depress -> status[label =" "];
+    empty -> status[label =" "];
+    DCVon -> checkStatus [label = " "];
+    DCVoff -> checkStatus [label = " "];
+    checkStatus -> status [label = " "];
+    status->Idle[label =" "];
+    checkStatus -> estop [label = "Failure case"];
+ }

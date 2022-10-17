@@ -1,0 +1,11 @@
+digraph newUSM {
+    // Receive TelemetryKeepAlive
+    S50 [label = "(ENTRY)Pre-Sync"];
+    S51 [label = "Control Bus Rx:\nTBM Telemetry keep-alive\n(ID: 0x084)"];
+    S52 [label = "Control Bus Tx:\nE-STOP (ID: 0x077)"];
+
+    S50 -> S51 [label = "Control PC: INIT"];
+    S51 -> S51 [label = "TBM Telemetry Alive\n100Hz"];
+    S51 -> S52 [label = " "];
+
+}

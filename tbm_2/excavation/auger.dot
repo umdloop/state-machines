@@ -3,7 +3,7 @@ digraph Excavation2{
 
     // Need Stuff for CIM motor turn on and off?
     // Cutterhead Control FSM
-    S01 [label="(ENTRY) Power Up"];
+    S01 [label="(ENTRY)];
     S02 [label="Idle"];
     S03 [label="Turn on cutterhead and auger (ID: 0x100)"];
     S04 [label="Cutterhead and auger on status"];

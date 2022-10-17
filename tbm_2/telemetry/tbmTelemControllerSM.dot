@@ -1,0 +1,11 @@
+digraph newUSM {
+    // Receive OpsKeepAlive
+    S50 [label = "(ENTRY)Pre-Sync"];
+    S51 [label = "Control Bus Rx:\nTBM Operations keep-alive\n(ID: 0x085)"];
+    S52 [label = "Control Bus Tx:\nE-STOP (ID: 0x077)"];
+
+    S50 -> S51 [label = "Control PC: INIT"];
+    S51 -> S51 [label = "TBM Ops Alive\n100Hz"];
+    S51 -> S52 [label = " "];
+
+}

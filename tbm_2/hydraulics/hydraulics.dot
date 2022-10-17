@@ -1,15 +1,25 @@
-digraph hydraulics{
-    S00 [label="Initialize"];
-    S01 [label="Boring (Extend cylinders, turn cutterhead)"];
-    S02 [label="close solenoids for pipe jacking and steering"];
-    S03 [label="pipe jacking solenoids retract and oil cooler on"];
-    S04 [label="depressurize system"];
+digraph {
+    // 12/15
+    S01 [label= "(ENTRY)"];
+    S03 [label="Open drain valves, DCV retract"];
+    S04 [label="Close drain valves, DCV fully retracted"];
+    S05 [label=" Actuators extend and retract routine"];
+    S06 [label="Open drain valves"];
+    S07 [label="Check up"];
+    S08 [label= "Check up"];
+    S09 [label= "ESTOP\n(ID: 0x077)"];
+    S10 [label= "Idle"];
 
-    S00 -> S01 [label="Close drains"];
-    S01 -> S01 [label="pipe jacks not fully extended"];
-    S01 -> S02 [label="pipe jacks fully extended"];
-    S02 -> S03 [label="system health verified"];
-    S03 -> S03 [label="cylinders not fully retracted"];
-    S03 -> S04 [label="system health verified"];
-    S04 -> S01 [label="ready to pressurize"];
+    S01 -> S10 [label=""];
+    S10 -> S08 [label=""]
+    S08 -> S03 [label= "Verify hydraulics state"];
+    S03 -> S04 [label="Control PC: Pressurize"];
+    S04 -> S05 [label="Control PC: start jacking"];
+// extending
+    S05 -> S06 [label="Control PC: Depressurize"];
+    S06 -> S07 [label="System depressurized"];
+    S07 -> S05 [label="Check success, Control PC: jacking"];
+    S07 -> S09 [label="Check fails"];
+    S08 -> S09 [label="Check fails"];
 }
+

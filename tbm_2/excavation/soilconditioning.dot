@@ -1,0 +1,12 @@
+digraph {
+    S01 [label= "Idle"];
+    S02 [label="Pump and compressor enabled"];
+    S09 [label= "ESTOP\n(ID: 0x077)"];
+    S10 [label= "Normal stop"];
+
+    S01 -> S02 [label=""];
+    S02 -> S02 [label="Measure pressure\n10Hz"]
+    S02 -> S09 [label="Over pressure limits"];
+    S02 -> S10 [label="Turn off pump and compressor"];
+}
+
